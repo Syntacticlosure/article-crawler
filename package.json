@@ -1,0 +1,26 @@
+{
+  "name": "article-crawler",
+  "version": "0.0.0",
+  "description": "article-crawler",
+  "main": "index.js",
+  "author": {
+    "name": ""
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.14",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cheerio": "^0.22.16",
+    "@types/lodash": "^4.14.149",
+    "@types/reflect-metadata": "^0.1.0",
+    "domino": "^2.1.4",
+    "page-metadata-parser": "^1.1.4",
+    "turndown": "^5.0.3"
+  }
+}
