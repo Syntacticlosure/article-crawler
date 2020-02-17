@@ -1,6 +1,6 @@
 # article-crawler
 example code:
-```
+```typescript
 import { get } from '.';
 import { writeFileSync } from 'fs';
 
@@ -10,11 +10,11 @@ get('https://zhuanlan.zhihu.com/p/104165843').then(
 ```
 
 # Middlewares
-```
+```typescript
 get(url,{request,requestHeadless,image,logger})
 ```
 
-```
+```typescript
 export type Middlewares = {
     request: (x: string) => Promise<string>;
     requestHeadless: (x: string) => Promise<string>;
@@ -32,7 +32,7 @@ Image Middleware replaces every image link to a new image link.
 Logger Middleware decides how to output the debug information.
 
 # Types
-```
+```typescript
 export type Article = {
     title: string,
     cover: string|null,
