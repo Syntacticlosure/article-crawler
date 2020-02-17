@@ -286,5 +286,31 @@ export class Platforms{
             content: articleContent,
         };
     }
-    
+    @matchUrl(/https:\/\/(www\.)?weibo\.com\/ttarticle\/p\/show.+/)
+    async handleWeibo({ url, data }: Page, mid: Middlewares): Promise<Article> {
+        const $ = cheerio.load(data);
+        const title = $('div.title').text();
+        const parsedTitleImage = $('img');
+        const parsedContent = $('div.WB_editor_iframe_new');
+        const parsedImages = $('img', parsedContent);
+        let coverLocation:string|null = null;
+        if (parsedTitleImage) {
+            const originSrc = parsedTitleImage.attr('src')!;
+            coverLocation = await mid.image(originSrc);
+        }
+        for (const image of parsedImages.toArray()) {
+            const originSrc = $(image).attr('src');
+            if (originSrc) {
+                const uploadUrl = await mid.image(originSrc);
+                if (uploadUrl) $(image).attr('src', uploadUrl);
+            }
+        }
+        const turndownService = new turndown();
+        const articleContent = turndownService.turndown(parsedContent.html());
+        return {
+            title,
+            cover: coverLocation,
+            content: articleContent,
+        };
+    }
 }

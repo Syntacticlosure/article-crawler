@@ -10,7 +10,9 @@ export async function get(url: string, config?: Partial<Middlewares>): Promise<A
         requestHeadless: defaultRequestHeadless,
         logger: defaultLogger
     }) as Middlewares;
-    const data = await mid.request(url);
+    const needHeadless = url.match(/https:\/\/(www\.)?weibo\.com\/ttarticle\/p\/show.+/);
+    const data = needHeadless ? await mid.requestHeadless(url):
+        await mid.request(url);
     const handlers: Handlers = Reflect.getMetadata('handlers', new Platforms());
     for (const handler of handlers) {
         if (url.match(handler.regexp)) {
